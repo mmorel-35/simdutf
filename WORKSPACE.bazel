@@ -1,0 +1,6 @@
+# WORKSPACE file for legacy Bazel support
+# This is for users who haven't migrated to bzlmod yet
+
+workspace(name = "simdutf")
+
+# No external dependencies required for basic functionality

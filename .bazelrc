@@ -1,0 +1,15 @@
+# Bazel configuration for simdutf
+
+# Use C++11 as the default standard
+build --cxxopt=-std=c++11
+
+# Enable optimizations by default
+build --compilation_mode=opt
+
+# Show more detailed output for failures  
+build --verbose_failures
+
+# Platform-specific optimizations
+build:linux --cxxopt=-march=native
+build:macos --cxxopt=-march=native
+build:windows --cxxopt=/arch:AVX2

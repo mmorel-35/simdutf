@@ -1,0 +1,8 @@
+package(default_visibility = ["//visibility:public"])
+
+# Demo program showing simdutf usage
+cc_binary(
+    name = "demo",
+    srcs = ["demo.cpp"],
+    deps = ["//:simdutf"],
+)

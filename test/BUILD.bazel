@@ -1,0 +1,15 @@
+# Test file simulating how envoy might use simdutf
+# This shows that the simple cc_library approach still works
+
+cc_library(
+    name = "simdutf_envoy_style",
+    srcs = ["//src:simdutf.cpp"],
+    hdrs = ["//include:simdutf.h"],
+    includes = ["include"],
+)
+
+cc_binary(
+    name = "test_envoy_style",
+    srcs = ["test_envoy_usage.cpp"],
+    deps = [":simdutf_envoy_style"],
+)

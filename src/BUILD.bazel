@@ -1,0 +1,57 @@
+package(default_visibility = ["//visibility:public"])
+
+# All source files
+filegroup(
+    name = "simdutf_sources",
+    srcs = glob([
+        "**/*.cpp",
+        "**/*.c",
+        "**/*.h",
+        "**/*.hpp",
+    ]),
+)
+
+# Main source files
+filegroup(
+    name = "simdutf_main_sources",
+    srcs = [
+        "simdutf.cpp",
+        "encoding_types.cpp",
+        "error.cpp", 
+        "implementation.cpp",
+    ],
+)
+
+# Internal headers  
+cc_library(
+    name = "simdutf_internal_headers",
+    hdrs = glob([
+        "**/*.h",
+        "**/*.hpp",
+    ], exclude = [
+        "**/*.cpp",
+    ]),
+    includes = ["."],
+    strip_include_prefix = "",
+)
+
+# Platform-specific implementations
+cc_library(
+    name = "simdutf_implementations",
+    hdrs = glob([
+        "**/implementation.h",
+        "*/implementation.h",
+        "simdutf/**/*.h",
+    ]),
+    includes = ["."],
+)
+
+# Tables
+cc_library(
+    name = "simdutf_tables",
+    hdrs = glob([
+        "tables/**/*.h",
+        "tables/**/*.hpp",
+    ]),
+    includes = ["."],
+)

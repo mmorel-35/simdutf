@@ -1,0 +1,28 @@
+package(default_visibility = ["//visibility:public"])
+
+# All header files in include directory
+filegroup(
+    name = "simdutf_headers",
+    srcs = glob([
+        "**/*.h",
+        "**/*.hpp",
+    ]),
+)
+
+# Main simdutf header
+cc_library(
+    name = "simdutf_header",
+    hdrs = ["simdutf.h"],
+    includes = ["."],
+    deps = [":simdutf_internal_headers"],
+)
+
+# Internal headers under simdutf/
+cc_library(
+    name = "simdutf_internal_headers",
+    hdrs = glob([
+        "simdutf/**/*.h",
+        "simdutf/**/*.hpp",
+    ]),
+    includes = ["."],
+)

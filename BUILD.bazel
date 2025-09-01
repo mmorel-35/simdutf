@@ -1,0 +1,79 @@
+package(default_visibility = ["//visibility:public"])
+
+# Simple library target using direct sources - what envoy expects
+cc_library(
+    name = "simdutf",
+    srcs = ["src/simdutf.cpp"],
+    hdrs = ["include/simdutf.h"],
+    includes = ["include"],
+    copts = [
+        "-std=c++11",
+        "-O3",
+    ],
+    linkopts = select({
+        "@platforms//os:windows": [],
+        "//conditions:default": ["-lpthread"],
+    }),
+)
+
+# Full library target using all sources directly
+cc_library(
+    name = "simdutf_full",
+    srcs = [
+        "src/simdutf.cpp",
+        "src/encoding_types.cpp", 
+        "src/error.cpp",
+        "src/implementation.cpp",
+    ],
+    hdrs = ["include/simdutf.h"],
+    includes = [
+        "include",
+        "src",
+    ],
+    copts = [
+        "-std=c++11",
+        "-O3",
+        "-Wall",
+        "-Wextra", 
+        "-Weffc++",
+        "-Wsign-compare",
+        "-Wshadow",
+        "-Wwrite-strings",
+        "-Wpointer-arith",
+        "-Winit-self",
+        "-Wconversion",
+        "-Wno-sign-conversion",
+        "-Wunused-function",
+        "-Wfatal-errors",
+    ] + select({
+        "@platforms//cpu:x86_64": [
+            "-mno-avx256-split-unaligned-load",
+            "-mno-avx256-split-unaligned-store",
+        ],
+        "//conditions:default": [],
+    }),
+    linkopts = select({
+        "@platforms//os:windows": [],
+        "//conditions:default": ["-lpthread"],
+    }),
+)
+
+# Header-only library for easier consumption
+cc_library(
+    name = "simdutf_headers",
+    hdrs = ["include/simdutf.h"],
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+)
+
+# Alias for backwards compatibility
+alias(
+    name = "simdutf-header-only",
+    actual = ":simdutf_headers",
+)
+
+# Alias with common alternative naming
+alias(
+    name = "lib",
+    actual = ":simdutf",
+)

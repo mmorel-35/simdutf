@@ -1,0 +1,5 @@
+module(
+    name = "simdutf",
+    version = "7.4.0",
+    compatibility_level = 1,
+)
